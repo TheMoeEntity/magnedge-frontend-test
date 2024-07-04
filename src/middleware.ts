@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
+import { isAdmin } from './actions/auth/isAdmin';
 
 const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
+
 export interface JwtPayload {
     userid: string;
     role: string;
@@ -12,6 +14,7 @@ export interface JwtPayload {
     };
     createdAt: number;
 }
+
 export async function middleware(req: NextRequest) {
     const token = req.cookies.get('session')?.value;
 
@@ -33,8 +36,8 @@ export async function middleware(req: NextRequest) {
         const { payload } = await jwtVerify(token, secret) as { payload: JwtPayload };
 
         // Check if the session is expired
-        const sessionExpiryTime = 60 * 60 * 1000 * 24; // 1 hour in milliseconds
-        const isExpired = Date.now() - (payload).createdAt > sessionExpiryTime;
+        const sessionExpiryTime = 60 * 60 * 1000 * 24; // 24 hours in milliseconds
+        const isExpired = Date.now() - payload.createdAt > sessionExpiryTime;
 
         if (isExpired && !isExpiredParam) {
             const redirectUrl = req.nextUrl.clone();
@@ -49,6 +52,14 @@ export async function middleware(req: NextRequest) {
             redirectUrl.pathname = '/';
             return NextResponse.redirect(redirectUrl);
         }
+        if (req.nextUrl.pathname.startsWith('/users')) {
+            const isAdminUser = await isAdmin();
+            if (!isAdminUser) {
+                const redirectUrl = req.nextUrl.clone();
+                redirectUrl.pathname = '/403';
+                return NextResponse.redirect(redirectUrl);
+            }
+        }
 
         return NextResponse.next();
     } catch (err) {
@@ -61,5 +72,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/', '/auth/signin', '/auth/signup'],
+    matcher: ['/', '/auth/signin', '/auth/signup', '/users'],
 };

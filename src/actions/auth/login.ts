@@ -8,6 +8,15 @@ interface ILogin {
     customerId: string
     password: string
 }
+export interface ISession {
+    createdAt: string
+    role: "ADMIN" | "USER"
+    data: {
+        firstName: string
+        lastnName: string
+    }
+    userid:string
+}
 interface IResponse {
     data: {
         userInfo: {
@@ -48,7 +57,8 @@ export const loginUser = async (formData: ILogin) => {
                 createdAt: Date.now()
             };
             const token = await signJWT(payload);
-            cookies().set({ name: 'session', value: token, httpOnly: true, secure: true, maxAge: 86400, sameSite: 'strict' })
+            cookies().set({ name: 'session', value: token, httpOnly: true, secure: true, maxAge: 86400, sameSite: 'strict' });
+            cookies().set({ name: 'token', value: apiResponse.data.token, httpOnly: true, secure: true, maxAge: 86400, sameSite: 'strict' });
 
             return { status: 'success', message: apiResponse.responseMessage, statusCode: apiResponse.responseCode }
         } else {

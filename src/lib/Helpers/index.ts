@@ -1,9 +1,8 @@
 
 import { Md5 } from "ts-md5";
 import { ChangeEvent } from "react";
-import CryptoJS from 'crypto-js';
 import { StaticImageData } from "next/image";
-import { vendorPrice } from "@/types";
+
 export class Helpers {
 
     static formatBytes(bytes: number, decimals = 2) {
@@ -93,9 +92,24 @@ export class Helpers {
         }
     };
 
-    static encryptData = (data: string) => {
-        const secretKey = this.formatDate(new Date())
-        return CryptoJS.AES.encrypt(data, secretKey).toString();
+    static formatBackendDate(dateString: string | undefined) {
+
+        const date = new Date(dateString || '');
+        if (isNaN(date.getTime())) {
+            throw new Error('Invalid date string');
+        }
+        const options: Intl.DateTimeFormatOptions = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZoneName: 'short'
+        };
+
+        const formatter = new Intl.DateTimeFormat('en-US', options);
+        return formatter.format(date);
     }
     static convertFileToBase64 = (file: File): Promise<string> => {
         return new Promise((resolve, reject) => {
@@ -124,15 +138,7 @@ export class Helpers {
 
         return match ? parseInt(match[0], 10) : null;
     }
-    static formatNetwork = (data: vendorPrice[], denomination: number, network:string| "MTN" | "GLO" | "AIRTEL" | "9MOBILE") => {
-        const formatted = data.map(item => {
-            const unitPrice = item.price
-            const pinPrice = '₦' + (denomination / 100) * unitPrice
-            return { ...item, formatted: `${item.network} ${denomination} - ${pinPrice}` }
-        })
-        const singleItem = formatted.find(item => item.network == network)?.formatted
-        return singleItem
-    }
+
     static shuffleArray = (arr: any[]) => {
         const arrCopy = arr.slice()
         for (let i = arrCopy.length - 1; i > 0; i--) {

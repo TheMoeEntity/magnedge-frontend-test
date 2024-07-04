@@ -5,6 +5,7 @@ import TableTwo from "@/components/Tables/TableTwo";
 
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import { getAllTransactions } from "@/actions/fetch/getAllTransactions";
 
 export const metadata: Metadata = {
   title: "Next.js Tables | TailAdmin - Next.js Dashboard Template",
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
     "This is Next.js Tables page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
 };
 
-const TablesPage = () => {
+const TablesPage = async() => {
+  const transactions = await getAllTransactions()
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Tables" />
