@@ -58,9 +58,10 @@ export const transactions = async (formData: ILogin) => {
         });
 
         const apiResponse = response.data as IResponse
-        console.log(apiResponse)
+        //return data to frontend and handle error and success states 
 
         if ((response.status === 200 || response.status === 201) && ((apiResponse.responseCode === 201 || apiResponse.responseCode === 200) && apiResponse.data !== null)) {
+            //revalidate the layout on users dashboard
             revalidatePath('/', 'layout')
             return { status: 'success', message: apiResponse.responseMessage, data: apiResponse.data, statusCode: apiResponse.responseCode }
         } else {

@@ -5,6 +5,7 @@ import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { ISession } from "../auth/login";
 import { jwtVerify } from "jose";
+/// Server function to fetch account details
 export interface JwtPayload {
     userid: string;
     role: "ADMIN" | "USER";
@@ -14,6 +15,7 @@ export interface JwtPayload {
     };
     createdAt: number;
 }
+//API Response
 interface IResponse {
     data: {
         _id: string,
@@ -45,7 +47,7 @@ export const getAccountDetails = async () => {
         const apiResponse = response.data as IResponse
 
         if ((response.status === 200 || response.status === 201) && ((apiResponse.responseCode === 201 || apiResponse.responseCode === 200) && apiResponse.data !== null)) {
-
+            //return data to frontend and handle error and success states 
             return { status: 'success', message: apiResponse.responseMessage, data: apiResponse.data, statusCode: apiResponse.responseCode }
         } else {
             return { status: 'error', message: apiResponse.responseMessage, data: null, statusCode: apiResponse.responseCode }

@@ -3,7 +3,7 @@
 import { JwtPayload } from "@/middleware";
 import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
-
+//server function to get fullname from cookie payload 
 export const getSessionData = async () => {
     const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
     const session = cookies().get('session')?.value || ""

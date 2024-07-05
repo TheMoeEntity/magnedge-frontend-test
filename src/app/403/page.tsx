@@ -2,7 +2,7 @@ import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb'
 import DefaultLayout from '@/components/Layouts/DefaultLayout'
 import Link from 'next/link'
 import React from 'react'
-
+// Forbidden page: ACCESS DENIED
 const Forbidden = () => {
     return (
 

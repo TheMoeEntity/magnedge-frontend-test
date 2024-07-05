@@ -3,7 +3,7 @@
 import { signJWT } from "@/lib/jwt";
 import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
-
+//server function to sign/register a user up 
 interface ILogin {
     customerId: string
     password: string
@@ -40,7 +40,7 @@ export const signupUser = async (formData: ILogin) => {
         console.log(apiResponse)
 
         if ((response.status === 200 || response.status === 201) && ((apiResponse.responseCode === 201 || apiResponse.responseCode === 200) && apiResponse.data !== null)) {
-
+            //return data to frontend and handle error and success states 
             return { status: 'success', message: apiResponse.responseMessage, statusCode: apiResponse.responseCode }
         } else {
             return { status: 'error', message: apiResponse.responseMessage, statusCode: apiResponse.responseCode }

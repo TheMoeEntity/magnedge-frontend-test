@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { tableType } from "@/app/users/page";
 import { revalidatePath } from "next/cache";
+// server function to delete a single user, accessible to only admins
 export interface JwtPayload {
     userid: string;
     role: string;
@@ -21,7 +22,6 @@ interface IResponse {
 export const deleteUser = async (userId: string) => {
     const session_token = cookies().get('token')?.value || ""
     const endpoint = process.env.NEXT_PUBLIC_DELETE_USER
-    console.log('users')
     try {
         const response = await axios.delete(endpoint || "", {
             headers: {
@@ -36,8 +36,10 @@ export const deleteUser = async (userId: string) => {
         console.log(apiResponse)
 
         if ((response.status === 200 || response.status === 201) && ((apiResponse.responseCode === 201 || apiResponse.responseCode === 200) && apiResponse.data !== null)) {
+            //revalidate the users table to update in real time
             revalidatePath('/users', 'page')
             revalidatePath('/users', 'layout')
+            //return data to frontend and handle error and success states 
             return { status: 'success', message: apiResponse.responseMessage, data: apiResponse.data, statusCode: apiResponse.responseCode }
         } else {
             return { status: 'error', message: apiResponse.responseMessage, data: null, statusCode: apiResponse.responseCode }

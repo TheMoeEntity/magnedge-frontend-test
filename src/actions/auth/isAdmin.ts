@@ -5,7 +5,7 @@ import { ISession } from "./login"
 import { JwtPayload } from "../fetch/getAccountDetails"
 import { jwtVerify } from "jose"
 
-
+//server function to get user role
 export const isAdmin = async () => {
     const token = cookies().get('session')?.value
     const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);

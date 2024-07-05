@@ -3,6 +3,7 @@
 import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
+//server function to get transactions
 export interface JwtPayload {
     userid: string;
     role: string;
@@ -51,7 +52,7 @@ export const getAllTransactions = async () => {
         console.log(apiResponse)
 
         if ((response.status === 200 || response.status === 201) && ((apiResponse.responseCode === 201 || apiResponse.responseCode === 200) && apiResponse.data !== null)) {
-
+            //return data to frontend and handle error and success states 
             return { status: 'success', message: apiResponse.responseMessage, data: apiResponse.data, statusCode: apiResponse.responseCode }
         } else {
             return { status: 'error', message: apiResponse.responseMessage, data: null, statusCode: apiResponse.responseCode }

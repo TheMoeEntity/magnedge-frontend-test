@@ -22,6 +22,7 @@ export default async function Home() {
     createdAt: details.data?.createdAt,
     updatedAt: details.data?.createdAt
   }
+  //get user role
   const isAdminUser = await isAdmin()
   return (
     <>

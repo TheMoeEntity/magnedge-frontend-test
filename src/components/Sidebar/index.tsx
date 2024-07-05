@@ -227,6 +227,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, isAdmin = false }: SidebarProps)
               {/* <!-- Menu Item Calendar --> */}
 
               {/* <!-- Menu Item Profile --> */}
+              {/* Only authorized admins can see this button on the sidebar */}
               {
                 isAdmin && (
                   <li>

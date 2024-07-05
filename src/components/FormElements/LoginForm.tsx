@@ -3,14 +3,21 @@ import { loginUser } from '@/actions/auth/login'
 import { Helpers } from '@/lib/Helpers'
 import axios, { AxiosError } from 'axios'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React, { FormEvent, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import React, { FormEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import Spinner from '../common/Spinner'
 
 const LoginForm = () => {
     const [done, setDone] = useState<boolean>(true)
     const { push } = useRouter()
+    const notAuth = useSearchParams().get('notAuth')
+    //capture expire
+    useEffect(() => {
+        if (notAuth === "true") {
+            toast.error('Not authorized! Your session is expired/invalid and you need to be signed in to access your dashboard')
+        }
+    }, [notAuth])
     const submitForm = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const target = event.target as HTMLFormElement

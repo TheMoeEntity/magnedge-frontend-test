@@ -4,7 +4,7 @@ import { jwtVerify } from 'jose';
 import { isAdmin } from './actions/auth/isAdmin';
 
 const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
-
+//middleware code
 export interface JwtPayload {
     userid: string;
     role: string;

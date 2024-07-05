@@ -3,7 +3,7 @@
 import { signJWT } from "@/lib/jwt";
 import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
-
+// server function to signn a user in
 interface ILogin {
     customerId: string
     password: string
@@ -56,10 +56,11 @@ export const loginUser = async (formData: ILogin) => {
                 },
                 createdAt: Date.now()
             };
+            // get and sign JWT for authentication
             const token = await signJWT(payload);
             cookies().set({ name: 'session', value: token, httpOnly: true, secure: true, maxAge: 86400, sameSite: 'strict' });
             cookies().set({ name: 'token', value: apiResponse.data.token, httpOnly: true, secure: true, maxAge: 86400, sameSite: 'strict' });
-
+            //return data to frontend and handle error and success states 
             return { status: 'success', message: apiResponse.responseMessage, statusCode: apiResponse.responseCode }
         } else {
             return { status: 'error', message: apiResponse.responseMessage, statusCode: apiResponse.responseCode }

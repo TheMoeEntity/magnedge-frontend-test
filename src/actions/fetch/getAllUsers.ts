@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import { tableType } from "@/app/users/page";
+//server function to get all users accessible only to admins
 export interface JwtPayload {
     userid: string;
     role: string;
@@ -33,7 +34,7 @@ export const getAllUsers = async () => {
         const apiResponse = response.data as IResponse
 
         if ((response.status === 200 || response.status === 201) && ((apiResponse.responseCode === 201 || apiResponse.responseCode === 200) && apiResponse.data !== null)) {
-
+            //return data to frontend and handle error and success states 
             return { status: 'success', message: apiResponse.responseMessage, data: apiResponse.data, statusCode: apiResponse.responseCode }
         } else {
             return { status: 'error', message: apiResponse.responseMessage, data: null, statusCode: apiResponse.responseCode }
