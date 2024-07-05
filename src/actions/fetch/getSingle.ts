@@ -3,6 +3,8 @@
 import axios, { AxiosError } from "axios";
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
+import { redirect } from "next/dist/server/api-utils";
+import { notFound } from "next/navigation";
 export interface JwtPayload {
     userid: string;
     role: string;
@@ -48,10 +50,9 @@ export const getSingle = async (id: string) => {
         });
 
         const apiResponse = response.data as IResponse
-        console.log(apiResponse)
+        console.log("RESPONSE", apiResponse)
 
         if ((response.status === 200 || response.status === 201) && ((apiResponse.responseCode === 201 || apiResponse.responseCode === 200) && apiResponse.data !== null)) {
-
             return { status: 'success', message: apiResponse.responseMessage, data: apiResponse.data, statusCode: apiResponse.responseCode }
         } else {
             return { status: 'error', message: apiResponse.responseMessage, data: null, statusCode: apiResponse.responseCode }

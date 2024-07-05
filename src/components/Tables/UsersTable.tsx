@@ -22,7 +22,8 @@ const UsersTable = ({ users }: { users: tableType[] }) => {
     }
     const [userId, setUserId] = useState<string>('')
     return (
-        <table className="w-full text-sm text-left rtl:text-right ">
+        <div className="flex flex-col w-full shadow-md overflow-x-scroll rounded-lg">
+            <table className="w-full rounded-lg  max-w-full min-w-full text-sm text-left rtl:text-right ">
             {
                 show && (
                     <div className="fixed top-0 flex flex-col justify-center items-center left-0 w-full h-full bg-[rgba(0,0,0,0.7)] z-[99999]">
@@ -104,6 +105,7 @@ const UsersTable = ({ users }: { users: tableType[] }) => {
                 }
             </tbody>
         </table>
+        </div>
     )
 }
 

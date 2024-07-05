@@ -7,9 +7,7 @@ import Spinner from "../common/Spinner";
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [show, setShow] = useState<boolean>(false)
-  const [done, setDone] = useState<boolean>(true)
   const logoutAction = async () => {
-    setDone(false)
     await logout()
   }
   const trigger = useRef<any>(null);
@@ -43,7 +41,6 @@ const DropdownUser = () => {
 
   return (
     <div className="relative">
-      <Spinner done={done} />
       {
         show && (
           <div className="fixed top-0 flex flex-col justify-center items-center left-0  w-full min-h-screen bg-[rgba(0,0,0,0.7)] z-[99999]">
