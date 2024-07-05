@@ -60,7 +60,7 @@ const AllTransactions = async () => {
                 <tbody>
                     {
                         transactions.data && transactions.data.map((user) => (
-                            <tr className="bg-white border-b ">
+                            <tr key={user._id} className="bg-white border-b ">
                                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                     <Link className='font-bold underline' href={'/alltransactions/' + user._id}>
                                         {user._id}

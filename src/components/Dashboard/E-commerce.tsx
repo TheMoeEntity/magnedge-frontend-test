@@ -13,7 +13,7 @@ type userdata = {
   createdAt: string | undefined,
   updatedAt: string | undefined,
 }
-const ECommerce = ({ fullName, details, usersCount }: { usersCount: number | undefined, fullName: string, details: userdata }) => {
+const ECommerce = ({isAdmin, fullName, details, usersCount }: {isAdmin:boolean, usersCount: number | undefined, fullName: string, details: userdata }) => {
   return (
     <>
       <h1 className="text-3xl text-black my-5 font-medium">Welcome back, {fullName}</h1>
@@ -42,7 +42,7 @@ const ECommerce = ({ fullName, details, usersCount }: { usersCount: number | und
         )
        }
        {
-        usersCount && (
+        isAdmin && usersCount && (
             <CardDataStats title="Total Users" total={String(usersCount) || 'loading..'} rate="0.95%" levelDown>
               <svg
                 className="fill-primary dark:fill-white"

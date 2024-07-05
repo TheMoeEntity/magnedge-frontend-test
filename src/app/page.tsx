@@ -26,7 +26,7 @@ export default async function Home() {
   return (
     <>
       <DefaultLayout isAdmin={isAdminUser}>
-        <ECommerce fullName={fullName} usersCount={usersCount}  details={userdata} />
+        <ECommerce isAdmin={isAdminUser} fullName={fullName} usersCount={usersCount}  details={userdata} />
       </DefaultLayout>
     </>
   );
