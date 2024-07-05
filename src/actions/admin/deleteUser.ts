@@ -21,7 +21,7 @@ interface IResponse {
 export const deleteUser = async (userId: string) => {
     const session_token = cookies().get('token')?.value || ""
     const endpoint = process.env.NEXT_PUBLIC_DELETE_USER
-    console.log('deleting......')
+    console.log('users')
     try {
         const response = await axios.delete(endpoint || "", {
             headers: {

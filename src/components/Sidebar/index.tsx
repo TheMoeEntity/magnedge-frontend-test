@@ -545,7 +545,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, isAdmin = false }: SidebarProps)
                             </clipPath>
                           </defs>
                         </svg>
-                        UI Elements
+                        Transactions
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open && "rotate-180"
                             }`}
@@ -571,20 +571,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, isAdmin = false }: SidebarProps)
                         <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
-                              href="/ui/alerts"
+                              href="/transactions"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/ui/alerts" && "text-white"
                                 }`}
                             >
-                              Alerts
+                              Make transaction
                             </Link>
                           </li>
                           <li>
                             <Link
-                              href="/ui/buttons"
+                              href="/alltransactions"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === "/ui/buttons" && "text-white"
                                 }`}
                             >
-                              Buttons
+                              View Transactions
                             </Link>
                           </li>
                         </ul>

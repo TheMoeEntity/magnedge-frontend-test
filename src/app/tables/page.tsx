@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 const TablesPage = async() => {
-  const transactions = await getAllTransactions()
+  
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Tables" />

@@ -27,17 +27,17 @@ interface IResponse {
         createdAt: string,
         updatedAt: string,
         __v: 0
-    }[],
+    },
     responseMessage: string,
     responseCode: number
 }
-export const getAllTransactions = async () => {
+export const getSingle = async (id: string) => {
     const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
     const session = cookies().get('session')?.value || ""
     const session_token = cookies().get('token')?.value || ""
     const { payload } = await jwtVerify(session, secret) as { payload: JwtPayload };
     const userid = payload.userid
-    const endpoint = process.env.NEXT_PUBLIC_GET_ALL_TRANSACTIONS + userid
+    const endpoint = "https://accountmanagement.onrender.com/api/transaction/getsingleTransaction?userId=" + userid + "&transactionId=" + id
     try {
         const response = await axios.get(endpoint || "", {
             headers: {

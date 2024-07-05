@@ -4,6 +4,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { getAccountDetails } from "@/actions/fetch/getAccountDetails";
 import { getSessionData } from "@/actions/fetch/getSession";
 import { isAdmin } from "@/actions/auth/isAdmin";
+import { getAllUsers } from "@/actions/fetch/getAllUsers";
 
 export const metadata: Metadata = {
   title:
@@ -12,6 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+  const users = await getAllUsers()
+  const usersCount = users.data?.length
   const details = await getAccountDetails()
   const fullName = await getSessionData()
   const userdata = {
@@ -23,7 +26,7 @@ export default async function Home() {
   return (
     <>
       <DefaultLayout isAdmin={isAdminUser}>
-        <ECommerce fullName={fullName} details={userdata} />
+        <ECommerce fullName={fullName} usersCount={usersCount}  details={userdata} />
       </DefaultLayout>
     </>
   );

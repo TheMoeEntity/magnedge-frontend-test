@@ -1,10 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
+import toast from "react-hot-toast";
+import { logout } from "@/actions/auth/logout";
+import Spinner from "../common/Spinner";
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [show, setShow] = useState<boolean>(false)
+  const [done, setDone] = useState<boolean>(true)
+  const logoutAction = async () => {
+    setDone(false)
+    await logout()
+  }
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
@@ -36,6 +43,40 @@ const DropdownUser = () => {
 
   return (
     <div className="relative">
+      <Spinner done={done} />
+      {
+        show && (
+          <div className="fixed top-0 flex flex-col justify-center items-center left-0  w-full min-h-screen bg-[rgba(0,0,0,0.7)] z-[99999]">
+            <div className="bg-white  w-fit min-w-[350px] pt-5 rounded shadow-lg">
+              <p className='px-3 py-3 text-lg'>Confirm action</p>
+              <hr />
+              <p className="mb-4 p-5 text-center border-black border-t-[0.5px]">
+                Are you sure you want to logout?
+              </p>
+              <hr />
+              <div style={{ paddingRight: '20px' }} className="flex justify-end py-3 space-x-4 ">
+                <button
+                  onClick={() => setShow(false)}
+                  className="px-4 py-2 bg-[#1C2435] text-white rounded hover:bg-gray-400"
+                >
+                  Cancel
+                </button>
+                <button
+                  style={{ backgroundColor: 'red', marginLeft: '15px' }}
+                  className="px-4 py-2 ml-2 bg-red text-white rounded"
+                  onClick={() => {
+                    logoutAction();
+                    setShow(false)
+                  }}
+                >
+                  LOGOUT
+                </button>
+
+              </div>
+            </div>
+          </div>
+        )
+      }
       <Link
         ref={trigger}
         onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -161,7 +202,7 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button onClick={()=> setShow(true)} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
           <svg
             className="fill-current"
             width="22"
